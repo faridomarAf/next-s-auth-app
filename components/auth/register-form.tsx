@@ -2,7 +2,6 @@ import * as z from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { RegisterSchema } from '@/schemas';
-import { HandleFormSubmit } from '@/utils/handleFormSubmit';
 import { register } from '@/actions/register';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -11,6 +10,7 @@ import { useState, useTransition } from 'react';
 import { Button } from '../ui/button';
 import { FormError } from '../form-error';
 import FormSuccess from '../form-success';
+import { HandleFormSubmit } from '@/utils/handleFormSubmit';
 
 export default function RegisterForm() {
     const [isPending, startTransition] = useTransition();
@@ -27,7 +27,9 @@ export default function RegisterForm() {
     });
 
     const submitHandler = async (values: z.infer<typeof RegisterSchema>)=>{
-        HandleFormSubmit(values,{action:register, setError, setSuccess})
+        startTransition(()=>{
+          HandleFormSubmit(values,{action:register, setError, setSuccess});
+        })
     };
 
   return (
@@ -100,8 +102,9 @@ export default function RegisterForm() {
         <Button
         type='submit'
         className='w-full'
+        disabled={isPending}
         >
-            Register
+            {isPending ? "Loading..." : "Register"}
         </Button>
       </form>
     </Form>
