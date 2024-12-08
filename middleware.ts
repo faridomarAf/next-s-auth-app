@@ -1,9 +1,12 @@
+//import { auth } from "@/auth" it should be removed
+
+//note we should modify our middleware regarding to our, becuase we doesnt use 'auth' where we clearly use the non-edge supported prismaAdapter. instead we should use the 'authConfig' to extract the 'auth' meddilware from it. so we should modify it as bellow by importing  'authConfig' from it auth.config.ts and 'NextAuth' from 'next-auth'
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import { apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, publicRoutes } from "./routes";
 
 
-const {auth} = NextAuth(authConfig);
+const {auth} = NextAuth(authConfig);// now we use 'auth' like this everything should wrok as default
  
 export default auth((req) => {
   const {nextUrl} = req;
