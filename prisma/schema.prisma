@@ -11,8 +11,17 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
-// lets now create a user-model
+enum UserRole {
+  ADMIN
+  USER
+}
 
+enum UserAddress {
+  Herat
+  Kabul
+}
+
+// lets now create a user-model
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -20,6 +29,8 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  role          UserRole @default(USER)
+  address       UserAddress @default(Herat)
   accounts      Account[]
  
   createdAt DateTime @default(now())
