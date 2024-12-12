@@ -6,8 +6,13 @@ import { getUserById } from "./utils/user";
 import { UserRole } from "@prisma/client";
  
 export const { auth, handlers, signIn, signOut } = NextAuth({
+   
+  pages :{
+    signIn: '/login',
+    error: '/error'
+  },
 
-  //Events are asynchronous functions that do not return a response, they are useful for audit logs / reporting or handling any other side-effects.
+  // Events are asynchronous functions that do not return a response, they are useful for audit logs / reporting or handling any other side-effects.
   events:{
     //linkAccount: Sent when an account in a given provider is linked to a user in our user database.
     async linkAccount({user}){
