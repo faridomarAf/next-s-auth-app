@@ -6,12 +6,12 @@ import { signIn } from 'next-auth/react';// its imported from ['next-auth/react'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
 export default function Social() {
+
   const onClick = (provider: 'google' | 'github')=>{
      signIn(provider, {
       callbackUrl: DEFAULT_LOGIN_REDIRECT
      })
   };
-
 
   return (
     <div className='flex w-full gap-2'>

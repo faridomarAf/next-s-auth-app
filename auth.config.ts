@@ -23,6 +23,7 @@ export default {
 
       //login with credentials
       Credentials({
+         
          async authorize(credentials){
             //check for valid fields
             const validatedFields = LoginSchema.safeParse(credentials);
