@@ -22,7 +22,6 @@ import { login } from '@/actions/login';
 import { HandleFormSubmit } from '@/utils/handleFormSubmit';
 import { useSearchParams } from 'next/navigation';
 
-
 export default function LoginForm() {
     const params = useSearchParams();
     const [isPending, startTransition] = useTransition();
