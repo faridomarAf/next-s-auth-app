@@ -25,7 +25,23 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
 
   callbacks:{
-   //create session callback
+
+   //handle verification-email for signIn 
+   async signIn({user, account}){
+    //Firs Allow Auth without email verification
+    if(account?.provider !== "credentials") return true;
+
+    //check email-verification for credential signIn 
+    const existingUser = await getUserById(user.id);
+
+    // if email is not verified block user from signIn
+    if(!existingUser?.emailVerified) return false;
+
+    //TODO: add 2fa check
+     
+    return true;// by default allow to signIn
+   },
+
    async session({session, token }){
 
     if(token.sub && session.user){
