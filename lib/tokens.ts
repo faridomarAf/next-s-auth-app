@@ -1,4 +1,5 @@
 import { db } from '@/utils/dbConfig';
+import { getPasswordResetTokenByEmail } from '@/utils/password-token-reset';
 import { getVirficationTokenByEmail } from '@/utils/verification-token';
 import {v4 as uuidv4} from 'uuid';
 
@@ -29,4 +30,27 @@ export const generateVerificationToken = async(email: string)=>{
     });
 
     return verificationToken;
+}
+
+// Generate token for password reset
+export const generatePasswordResetToken = async(email: string)=>{
+    const token = uuidv4();
+    const expires = new Date(new Date().getTime() + 3600 * 1000);// it would expire in one hour
+    const existingToken = await getPasswordResetTokenByEmail(email);
+
+    if(existingToken){
+        await db.passwordResetToken.delete({
+            where:{id: existingToken.id}
+        });
+    }
+
+    //create new paassword reset token
+    const passwordResetToken = await db.passwordResetToken.create({
+        data:{
+            email,
+            token,
+            expires
+        }
+    })
+    return passwordResetToken;
 }
