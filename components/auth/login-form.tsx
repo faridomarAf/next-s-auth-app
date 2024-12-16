@@ -21,6 +21,7 @@ import FormSuccess from '../form-success';
 import { login } from '@/actions/login';
 import { HandleFormSubmit } from '@/utils/handleFormSubmit';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginForm() {
     const params = useSearchParams();
@@ -89,6 +90,15 @@ export default function LoginForm() {
                             type='password'
                             />
                         </FormControl>
+                        <Button 
+                        variant={'link'}
+                        asChild
+                        className='px-0'
+                        >
+                          <Link href='/reset'>
+                            Forgot password?
+                          </Link>
+                        </Button>
                         <FormMessage/>
                     </FormItem>
                   )}
