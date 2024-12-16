@@ -4,38 +4,46 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import React, { useState, useTransition } from 'react'
 import { CardWrapper } from './card-wrapper'
 import { useForm } from 'react-hook-form';
-import { ResetSchema } from '@/schemas';
-import { HandleFormSubmit } from '@/utils/handleFormSubmit';
+import { NewPasswordSchema } from '@/schemas';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { FormError } from '../form-error';
 import FormSuccess from '../form-success';
 import { Button } from '../ui/button';
-import { reset } from '@/actions/reset';
+import { useSearchParams } from 'next/navigation';
+import { newPassword } from '@/actions/new-password';
 
-export default function ResetPasswordForm() {
+export default function NewPasswordForm() {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
+    const params = useSearchParams();
+    const token = params.get('token');
 
-    const form = useForm<z.infer<typeof ResetSchema>>({
-        resolver: zodResolver(ResetSchema),
+
+
+    const form = useForm<z.infer<typeof NewPasswordSchema>>({
+        resolver: zodResolver(NewPasswordSchema),
         defaultValues:{
-            email:""
+            password:""
         }
     });
 
 
-    const onSubmitHandler = async (values: z.infer<typeof ResetSchema>)=>{
+    const onSubmitHandler = async (values: z.infer<typeof NewPasswordSchema>)=>{
         startTransition(()=>{
-            HandleFormSubmit(values, {action:reset, setError, setSuccess})
+          newPassword(values, token)
+          .then((data)=>{
+            setError(data?.error)
+            setSuccess(data.success)
+          })
         })
     }
 
 
   return (
     <CardWrapper
-    headerLabel='Forgot password'
+    headerLabel='Enter new password'
     backButtonLabel='Back to login'
     backButtonHref='/login'
     >
@@ -47,15 +55,15 @@ export default function ResetPasswordForm() {
            <div className='space-y-4'>
             <FormField
             control={form.control}
-            name='email'
+            name='password'
             render={({field})=>(
                 <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                     <Input
                     {...field}
-                    placeholder='email'
-                    type='email'
+                    placeholder='password'
+                    type='password'
                     />
                 </FormControl>
                 <FormMessage/>
@@ -66,7 +74,7 @@ export default function ResetPasswordForm() {
            <FormError message={error}/>
             <FormSuccess message={success}/>
             <Button disabled={isPending} className='w-full' type='submit'>
-               {isPending ? "Loading..." : "Send reset email"}
+               {isPending ? "Loading..." : "Reset password"}
             </Button>
          </form>
       </Form>
