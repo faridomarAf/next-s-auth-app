@@ -11,6 +11,7 @@ import { Input } from '../ui/input';
 import { FormError } from '../form-error';
 import FormSuccess from '../form-success';
 import { Button } from '../ui/button';
+import { reset } from '@/actions/reset';
 
 export default function ResetPasswordForm() {
     const [error, setError] = useState<string | undefined>("");
