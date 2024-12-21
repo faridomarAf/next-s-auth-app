@@ -29,7 +29,7 @@ export const sendPasswordResetEmail = async(email: string, token: string)=>{
 }
 
 
-export const sendTwoFactorTokenEmail = async(token: string, email: string)=>{
+export const sendTwoFactorTokenEmail = async(email: string, token: string)=>{
    await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
