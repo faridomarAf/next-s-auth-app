@@ -11,12 +11,13 @@ export const handleFormSubmit = async <T>(
   values: T,
   { action, setError, setSuccess, setTwoFactor }: HandleFormSubmitProps<T>
 ) => {
-  setError("");
-  setSuccess("");
+  setError(""); // Reset errors before submission
+  setSuccess(""); // Reset success message
 
   try {
     const { error, success, twoFactor } = await action(values);
 
+    // Update the UI state based on the action result
     if (error) setError(error);
     if (success) setSuccess(success);
     if (twoFactor && setTwoFactor) setTwoFactor(true);
