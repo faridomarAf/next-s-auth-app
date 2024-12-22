@@ -29,7 +29,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
    //handle verification-email for signIn 
    async signIn({user, account}){
-    //Firs Allow Auth without email verification
+    //Firs Allow Oauth without email verification
     if(account?.provider !== "credentials") return true;
 
     //check email-verification for credential signIn 
