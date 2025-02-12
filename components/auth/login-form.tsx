@@ -19,9 +19,9 @@ import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import FormSuccess from "../form-success";
 import { login } from "@/actions/login";
-import { handleFormSubmit } from "@/utils/handleFormSubmit";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import  {HandleFormSubmit}  from "@/utils/handleFormSubmit";
 
 export default function LoginForm() {
   const params = useSearchParams();
@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   const submitHandler = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      handleFormSubmit(values, {
+      HandleFormSubmit(values, {
         action: login,
         setError,
         setSuccess,

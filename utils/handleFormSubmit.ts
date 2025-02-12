@@ -7,7 +7,7 @@ interface HandleFormSubmitProps<T> {
   setTwoFactor?: Dispatch<SetStateAction<boolean>>;
 }
 
-export const handleFormSubmit = async <T>(
+export  const HandleFormSubmit = async <T>(
   values: T,
   { action, setError, setSuccess, setTwoFactor }: HandleFormSubmitProps<T>
 ) => {
